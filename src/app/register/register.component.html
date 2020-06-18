@@ -1,0 +1,107 @@
+<div class="body">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 mx-auto">
+        <div id="first">
+          <div class="myform form ">
+            <div class="logo mb-3">
+              <div class="col-md-12 text-center">
+                <h1>Login</h1>
+              </div>
+            </div>
+            <form *ngIf="!isLoggedIn"
+                  name="loginForm"
+                  (ngSubmit)="fl.form.valid && onSubmitLogin()"
+                  #fl="ngForm"
+                  novalidate>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" [(ngModel)]="loginForm.username"
+                       required id="username" placeholder="Enter Username" #username="ngModel">
+                <div class="alert-danger" *ngIf="fl.submitted && username.invalid">
+                  <div *ngIf="username.errors.required">Username is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password"
+                       [(ngModel)]="loginForm.password" required
+                       #password="ngModel">
+                <div class="alert-danger" *ngIf="fl.submitted && password.invalid">
+                  <div *ngIf="password.errors.required">Password is required</div>
+                </div>
+              </div>
+              <div class="col-md-12 text-center ">
+                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+              </div>
+              <div class="alert alert-warning" *ngIf="fl.submitted && isSignUpFailed">
+                Signup failed!<br/>{{ errorMessage }}
+              </div>
+              <div class="form-group">
+                <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div id="second">
+          <div class="myform form ">
+            <div class="logo mb-3">
+              <div class="col-md-12 text-center">
+                <h1>Signup</h1>
+              </div>
+            </div>
+            <form name="registerForm"
+                  *ngIf="!isSuccessful"
+                  (ngSubmit)="fr.form.valid && onSubmitRegister()"
+                  #fr="ngForm" novalidate>
+              <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp"
+                       placeholder="Enter Username" [(ngModel)]="registerForm.username"
+                       required #username="ngModel">
+                <div class="alert-danger" *ngIf="fr.submitted && username.invalid">
+                  <div *ngIf="username.errors.required">Username is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="text" name="email" class="form-control" id="email" aria-describedby="emailHelp"
+                       placeholder="Enter Email"
+                       [(ngModel)]="registerForm.email"
+                       required
+                       email #email="ngModel">
+                <div class="alert-danger" *ngIf="fr.submitted && email.invalid">
+                  <div *ngIf="email.errors.required">Email is required</div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input type="email" name="password" class="form-control" id="password" aria-describedby="emailHelp"
+                       placeholder="Enter email" [(ngModel)]="registerForm.password"
+                       required #password="ngModel">
+                <div class="alert-danger" *ngIf="fr.submitted && password.invalid">
+                  <div *ngIf="password.errors.required">Password is required</div>
+
+                </div>
+                <div class="col-md-12 text-center mb-3">
+                  <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Sign Up</button>
+                </div>
+                <div class="col-md-12 ">
+                  <div class="form-group">
+                    <p class="text-center"><a href="#" id="signin">Already have an account?</a></p>
+                  </div>
+                </div>
+                <div class="alert alert-warning" *ngIf="fr.submitted && isSignUpFailed">
+                  Signup failed!<br/>{{ errorMessage }}
+                </div>
+              </div>
+            </form>
+            <div class="alert alert-success" *ngIf="isSuccessful">
+              Your registration is successful!
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="container">
+<br>
+  <div class="card card-cascade narrower">
+    <div
+      class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+
+      <div>
+        <button type="button" class="btn" (click)="block()" data-toggle="tooltip" data-placement="top" title="Block"><img src="../../assets/lock-24px.svg"></button>
+        <button type="button" class="btn" (click)="unblock()" data-toggle="tooltip" data-placement="top" title="Unblock"><img src="../../assets/lock_open-24px.svg"></button>
+        <button type="button" class="btn" (click)="delete()" data-toggle="tooltip" data-placement="top" title="Delete"><img src="../../assets/delete-24px.svg"></button>
+      </div>
+
+      <a href="" class="white-text mx-3">Authorized users</a>
+
+    </div>
+    <table id="tableUsers" class="table table-hover">
+      <thead>
+      <tr>
+        <th>
+          <input type="checkbox" [(ngModel)]="masterSelected" name="list_name" value="m1" (change)="checkUncheckAll()"/>
+        </th>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Date of registration</th>
+        <th>Date of last login</th>
+        <th>Status</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <th>
+          <input type="checkbox" [(ngModel)]="user.isSelected" name="list_name" value="{{user.isSelected}}"
+                 (change)="isAllSelected()"/>
+        </th>
+        <th scope="row">{{user.id}}</th>
+        <td>{{user.username}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.dateOfRegistration}}</td>
+        <td>{{user.dateOfLastLogin}}</td>
+        <td>{{user.status}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
