@@ -32,8 +32,4 @@ export class TokenStorageService {
   public getUser() {
     return JSON.parse(sessionStorage.getItem(USER_KEY));
   }
-
-  public isExist() {
-    return window.sessionStorage.getItem(TOKEN_KEY) != null;
-  }
 }

@@ -3,6 +3,9 @@ import {User} from '../_entities/user';
 import {UserService} from '../_services/user.service';
 import {StatusUpdate} from '../_entities/status-update';
 import {Status} from '../_entities/status.enum';
+import {TokenStorageService} from '../_services/token-storage.service';
+import {remove} from 'lodash';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +14,14 @@ import {Status} from '../_entities/status.enum';
 })
 export class HomeComponent implements OnInit {
 
-  updatedUsers: User[];
   users: User[];
   masterSelected: any;
   checkedUsers: number[];
   statusUpdate: StatusUpdate;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService,
+              private tokenStorage: TokenStorageService,
+              private router: Router) {
   }
 
   ngOnInit(): void {
@@ -55,33 +59,41 @@ export class HomeComponent implements OnInit {
   }
 
   delete() {
-    this.updatedUsers = [];
     if (this.checkedUsers.length > 0) {
-      this.userService.delete(this.checkedUsers);
-      this.users.filter(user => this.checkedUsers.includes(user.id) === false)
-        .forEach(user => this.updatedUsers.push(user));
-      this.users = [];
-      this.users = this.updatedUsers;
+      this.userService.delete(this.checkedUsers).subscribe(
+        remove(this.users, user =>
+          this.checkedUsers.includes(user.id)));
     }
   }
 
   unblock() {
-    if (this.checkedUsers.length > 0) {
-      this.statusUpdate = new StatusUpdate(this.checkedUsers, Status.UNBLOCKED);
-      this.userService.updateStatus(this.statusUpdate).subscribe(
-        data => this.users = this.users.concat(data)
-      );
-      console.log('unblock' + this.users);
-    }
+    this.updateStatus(Status.UNBLOCKED);
   }
 
   block() {
-    console.log(this.checkedUsers.length);
+    this.updateStatus(Status.BLOCKED);
+    this.checkUser();
+  }
+
+  updateStatus(status: Status) {
     if (this.checkedUsers.length > 0) {
-      this.statusUpdate = new StatusUpdate(this.checkedUsers, Status.BLOCKED);
+      this.statusUpdate = new StatusUpdate(this.checkedUsers, status);
       this.userService.updateStatus(this.statusUpdate).subscribe(
-        data => this.users = this.users.concat(data)
+        data => {
+          remove(this.users, user =>
+            this.checkedUsers.includes(user.id));
+          this.users = this.users.concat(data);
+          console.log(this.users);
+          console.log(data);
+        }
       );
+    }
+  }
+
+  private checkUser() {
+    if (this.checkedUsers.includes(this.tokenStorage.getUser().id)) {
+      this.tokenStorage.signOut();
+      this.router.navigate(['/']);
     }
   }
 }

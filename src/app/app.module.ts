@@ -11,16 +11,16 @@ import {HomeGuard} from './home/home.guard';
 
 const appRoutes: Routes = [
   {
-    path: 'entry',
+    path: '',
     component: RegisterComponent,
   },
   {
-    path: '',
+    path: 'home',
     component: HomeComponent,
     canActivate: [HomeGuard]
   },
   { path: '**',
-    redirectTo: 'entry',
+    redirectTo: '',
     pathMatch: 'full'
   }
 ];

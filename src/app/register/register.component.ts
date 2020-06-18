@@ -112,6 +112,7 @@ export class RegisterComponent implements AfterViewInit, OnInit {
         this.isLoggedIn = true;
         this.isLoginFailed = false;
         this.reloadPage();
+        this.router.navigate(['/home']);
       },
       error1 => {
         this.errorMessage = error1.error.message;
@@ -129,7 +130,7 @@ export class RegisterComponent implements AfterViewInit, OnInit {
         this.tokenStorage.saveUser(data);
         this.isSuccessful = true;
         this.isSignUpFailed = false;
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       },
       err => {
         this.errorMessage = err.error.message;

@@ -20,6 +20,7 @@ export class UserService {
   }
 
   login(login: LogIn): Observable<any> {
+    console.log(login);
     return this.http.post(API_URL + '/authentication', JSON.stringify(login), httpOptions);
   }
 
@@ -39,9 +40,9 @@ export class UserService {
   delete(ids): Observable<any> {
     const options = {
       headers: httpOptions.headers,
-      body: ids,
+      body: JSON.stringify(ids),
     };
-    console.log('ids = ' + ids);
+    console.log('ids delete = ' + ids);
     return this.http.delete(API_URL + '/users', options);
   }
 }

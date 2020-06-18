@@ -22,6 +22,7 @@
     "@angular/router": "~9.1.9",
     "@material/checkbox": "^6.0.0",
     "jquery": "^3.5.1",
+    "lodash": "^4.17.15",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
