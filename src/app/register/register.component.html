@@ -80,7 +80,7 @@
               <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password" class="form-control" placeholder="Enter Password"
-                       [(ngModel)]="loginForm.password" required
+                       [(ngModel)]="registerForm.password" required
                        #password="ngModel">
                 <div class="alert-danger" *ngIf="fr.submitted && password.invalid">
                   <div *ngIf="password.errors.required">Password is required</div>
