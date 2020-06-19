@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from './_services/token-storage.service';
+import {MessageService} from './_services/message-service';
 
 @Component({
   selector: 'app-root',
@@ -9,8 +10,19 @@ import {TokenStorageService} from './_services/token-storage.service';
 export class AppComponent implements OnInit {
   isLoggedIn = false;
   username: string;
+  subscription: any;
 
-  constructor(private tokenStorageService: TokenStorageService) {
+  constructor(private tokenStorageService: TokenStorageService,
+              private messageService: MessageService) {
+    this.subscription = this.messageService.getMessage()
+      .subscribe(message => {
+        this.isLoggedIn = message;
+        if (this.isLoggedIn) {
+          this.ngOnInit();
+        } else {
+          this.logout();
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -22,7 +34,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  logout(){
+  logout() {
     this.tokenStorageService.signOut();
     window.location.reload();
   }

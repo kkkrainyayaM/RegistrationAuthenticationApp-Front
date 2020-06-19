@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {User} from '../_entities/user';
+import {MessageService} from './message-service';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -9,9 +10,10 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
 
-  constructor() { }
+  constructor(private messageService: MessageService) { }
 
   signOut() {
+    this.messageService.updateMessage(false);
     window.sessionStorage.clear();
   }
 
@@ -27,6 +29,7 @@ export class TokenStorageService {
   public saveUser(user: User) {
     window.sessionStorage.removeItem(USER_KEY);
     window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    this.messageService.updateMessage(true);
   }
 
   public getUser() {

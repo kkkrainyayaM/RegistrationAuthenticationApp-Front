@@ -37,6 +37,9 @@
               <div class="alert alert-warning" *ngIf="fl.submitted && isSignUpFailed">
                 Signup failed!<br/>{{ errorMessage }}
               </div>
+              <div class="alert alert-success" *ngIf="isSuccessful">
+                Your log in is successful!
+              </div>
               <div class="form-group">
                 <p class="text-center">Don't have account? <a href="#" id="signup">Sign up here</a></p>
               </div>

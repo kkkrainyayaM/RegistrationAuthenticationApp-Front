@@ -108,10 +108,8 @@ export class RegisterComponent implements AfterViewInit, OnInit {
       data => {
         this.tokenStorage.saveToken(data.accessToken);
         this.tokenStorage.saveUser(data);
-
         this.isLoggedIn = true;
         this.isLoginFailed = false;
-        this.reloadPage();
         this.router.navigate(['/home']);
       },
       error1 => {
@@ -137,9 +135,5 @@ export class RegisterComponent implements AfterViewInit, OnInit {
         this.isSignUpFailed = true;
       }
     );
-  }
-
-  reloadPage() {
-    window.location.reload();
   }
 }

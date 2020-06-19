@@ -8,6 +8,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeGuard} from './home/home.guard';
+import {MessageService} from './_services/message-service';
 
 const appRoutes: Routes = [
   {
@@ -38,7 +39,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [HomeGuard],
+  providers: [HomeGuard, MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
